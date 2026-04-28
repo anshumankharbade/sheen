@@ -7,15 +7,23 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    rolldownOptions: {
+    rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-        },
-      },
-    },
+        // Use a function instead of an object
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Group react, react-dom, react-router-dom into 'vendor'
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              return 'vendor';
+            }
+            // All other node_modules go to 'vendor' as well (or you can split further)
+            return 'vendor';
+          }
+        }
+      }
+    }
   },
   server: {
-    port: 5173,
-  },
+    port: 5173
+  }
 });

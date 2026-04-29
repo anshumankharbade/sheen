@@ -1,81 +1,124 @@
-# sheen — Salon Booking App
+# ✨ Sheen – Salon Booking Platform
 
-Full-stack salon booking application with glassmorphism UI.
+**Sheen** is a full-stack web application that allows customers to book salon services online. It features a modern glass-morphic UI, real-time availability checking, and a secure admin panel.
 
-## Stack
-- **Client** — React 19, Vite, Tailwind CSS v4, React Router v7
-- **Server** — Node.js, Express 5, MongoDB (Mongoose), Helmet, CORS
+🔗 **Live Demo** – [https://sheensalon.netlify.app](https://sheensalon.netlify.app)
+🔗 **API Backend** – [https://sheen-api.onrender.com](https://sheen-api.onrender.com)
 
 ---
 
-## Quick Start
+## Features
 
-### 1. Server setup
+### For Customers
+
+* Browse services with images, descriptions, prices & durations
+* View stylists and their offered services
+* Book a service with date/time selection (real-time conflict prevention)
+* Receive instant feedback on successful/cancelled bookings
+
+### For Administrators
+
+* Secure login using an admin token (server-side verification)
+* Full CRUD for **services**
+* Full CRUD for **stylists** (assign multiple services to each)
+* Manage all **bookings** (update status: pending / confirmed / cancelled)
+* All admin endpoints are protected via token header
+
+### Technical Highlights
+
+* **Backend:** Node.js + Express, MongoDB (Mongoose), static token auth
+* **Frontend:** React 19, React Router v7, Vite, Tailwind CSS 4
+* **UI/UX:** Glass morphism, responsive design, custom fonts (Cormorant Garamond + DM Sans)
+* **Security:** CORS whitelist, Helmet, rate limiting (optional), environment variables for secrets
+* **Deployment:** Backend on Render, Frontend on Netlify, MongoDB Atlas
+
+---
+
+## Project Structure
 
 ```bash
-cd server
-npm install
-cp .env.example .env   # fill in your values
-npm run dev
+sheen/
+├── client/          # React frontend (Vite + Tailwind)
+│   ├── src/
+│   ├── public/
+│   └── package.json
+├── server/          # Node.js backend (Express + Mongoose)
+│   ├── models/
+│   ├── routes/
+│   └── server.js
+├── .gitignore
+└── README.md
 ```
-
-### 2. Client setup
-
-```bash
-cd client
-npm install
-cp .env.example .env   # fill in your values
-npm run dev
-```
-
-Open http://localhost:5173
 
 ---
 
 ## Environment Variables
 
-### `server/.env`
+### Client (`client/.env`)
 
-| Variable | Description |
-|---|---|
-| `MONGO_URI` | MongoDB connection string |
-| `ADMIN_TOKEN` | Secret token for admin API access |
-| `ALLOWED_ORIGINS` | Comma-separated allowed CORS origins |
-| `PORT` | Server port (default: 5000) |
+| Variable       | Description                                         |
+| -------------- | --------------------------------------------------- |
+| `VITE_API_URL` | Backend API URL (e.g., `https://api.sheen.com/api`) |
 
-### `client/.env`
+### Server (`server/.env`)
 
-| Variable | Description |
-|---|---|
-| `VITE_API_URL` | Backend API base URL (e.g. `http://localhost:5000/api`) |
-| `VITE_ADMIN_TOKEN` | Must match `ADMIN_TOKEN` on the server |
+| Variable          | Description                                        |
+| ----------------- | -------------------------------------------------- |
+| `MONGO_URI`       | MongoDB Atlas connection string (database `sheen`) |
+| `ADMIN_TOKEN`     | Strong secret for admin authentication             |
+| `ALLOWED_ORIGINS` | Comma-separated frontend domains                   |
+| `PORT`            | Port for the server (default 5000)                 |
+
+> **Never commit `.env` files.** They are ignored via `.gitignore`.
+
+---
+
+## Local Development
+
+### Backend
+
+```bash
+cd server
+npm install
+cp .env.example .env   # fill in your values
+npm run dev            # runs on http://localhost:5000
+```
+
+### Frontend
+
+```bash
+cd client
+npm install
+cp .env.example .env   # set VITE_API_URL=http://localhost:5000/api
+npm run dev            # runs on http://localhost:5173
+```
 
 ---
 
 ## Deployment
 
-### Client (Vercel / Netlify)
-```bash
-cd client
-npm run build   # outputs to client/dist/
-```
-Set env vars in your hosting dashboard. For Vercel, add a `vercel.json`:
-```json
-{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
-```
+* **Frontend:** Build (`npm run build`) → deploy `dist/` folder to Netlify / Vercel / Cloudflare Pages
+* **Backend:** Push `server/` folder to Render / Railway / Fly.io – configure environment variables
+* **Database:** MongoDB Atlas (free tier M0) – name the database `sheen`
 
-### Server (Railway / Render / VPS)
-```bash
-cd server
-npm install --omit=dev
-npm start
-```
-Set `MONGO_URI`, `ADMIN_TOKEN`, `ALLOWED_ORIGINS`, and `PORT` in your host's environment settings.
+Detailed deployment steps are available in the author’s guide.
 
 ---
 
-## Admin Panel
+## License
 
-Visit `/admin` in the browser. Enter the token matching `VITE_ADMIN_TOKEN` / `ADMIN_TOKEN`.
+ISC – free to use and modify for personal or commercial projects with appropriate credit.
 
-The admin panel lets you manage **services**, **stylists**, and **bookings**.
+---
+
+## Author
+
+Developed by Anshuman Kharbade
+GitHub: [https://github.com/anshumankharbade](https://github.com/anshumankharbade)
+
+---
+
+## Acknowledgements
+
+* Pexels for placeholder images
+* Fonts: Cormorant Garamond & DM Sans

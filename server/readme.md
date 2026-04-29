@@ -170,4 +170,3 @@ Once your frontend is deployed (e.g., on Netlify), set the `ALLOWED_ORIGINS` env
 ## License
 
 ISC
-```

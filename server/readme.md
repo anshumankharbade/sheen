@@ -1,6 +1,3 @@
-Here's the `server/README.md` file – copy and paste this into `server/README.md`:
-
-```markdown
 # Sheen – Server (Backend)
 
 Node.js + Express + MongoDB backend for the Sheen Salon booking platform.
